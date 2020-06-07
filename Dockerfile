@@ -3,13 +3,12 @@ FROM centos:7
 LABEL maintainer="KAI VO"
 
 RUN yum update -y
-    
-	#install and config sshd
+# Install sshd
 RUN yum install openssh-server -y && \
 	ssh-keygen -A && \
 	echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && \
     echo "root:123456" | chpasswd
-	
+# Install packages build jconnector and tomcat	
 RUN yum install httpd -y && \
     yum install wget openssh-server httpd-devel apr apr-devel apr-util apr-util-devel gcc* gcc-c++ make autoconf libtool python-setuptools easy_install supervisor java-11-openjdk java-11-openjdk-devel curl -y
 
@@ -33,9 +32,11 @@ RUN cd /opt/ \
 && cp -R * /opt/tomcat9/ \
 && chmod -R 777 /opt/tomcat9
 
+# remove file taz
 RUN rm -rf /opt/apache-tomcat-9.0.30.tar.gz && \
     rm -rf /opt/tomcat-connectors-1.2.46-src.tar.gz
 
+# Install service supervisor
 RUN yum install -y python-setuptools && \
     easy_install supervisor && \
     mkdir -p /var/log/supervisor && \
@@ -44,6 +45,7 @@ RUN yum install -y python-setuptools && \
 COPY supervisor.conf /etc/supervisor.conf
 COPY start.sh /opt/
 
+# add mod execute file bash shell
 RUN chmod +x /opt/start.sh
 	
 EXPOSE 80 22 8080
