@@ -33,6 +33,9 @@ RUN cd /opt/ \
 && cp -R * /opt/tomcat9/ \
 && chmod -R 777 /opt/tomcat9
 
+RUN rm -rf /opt/apache-tomcat-9.0.30.tar.gz && \
+    rm -rf /opt/tomcat-connectors-1.2.46-src.tar.gz
+
 RUN yum install -y python-setuptools && \
     easy_install supervisor && \
     mkdir -p /var/log/supervisor && \
