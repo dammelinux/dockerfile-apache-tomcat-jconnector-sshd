@@ -1,5 +1,7 @@
 FROM centos:7
 
+LABEL maintainer="KAI VO"
+
 RUN yum update -y
     
 	#install and config sshd
