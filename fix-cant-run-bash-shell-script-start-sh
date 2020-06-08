@@ -1,0 +1,7 @@
+# when cant run file bash shell start.sh => docker exec -it <name-container> bash
+# run scripts => cd /opt/ => ./start.sh => error /bin/bash^M: bad interpreter: No such file or directory
+# run scripts sed -i -e 's/\r$//' start.sh
+# add mod execute file bash shell
+RUN chmod +x /opt/start.sh && \
+    cd /opt/ && \
+    sed -i -e 's/\r$//' start.sh
